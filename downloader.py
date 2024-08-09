@@ -3,8 +3,8 @@ from bs4 import BeautifulSoup
 import os
 import threading
 
-url = "https://leviathan-manga.online/manga/leviathan-chapter-?/"
-filename = "laviathan"
+url = "https://w47.readnanomachine.com/nano-machine-chapter-?-v4/"
+filename = "nano-machine"
 
 def grabHref(html: str) -> str:
     if "facebook" in html:
@@ -22,7 +22,7 @@ def downloadImage(url: str, page: int, chapter: int):
     with open(os.path.join("downloads", filename, "chapter-" + str(chapter), filename + "-" + str(page) + ".jpg"), "wb") as f:
         f.write(response.content)
 
-def get_manga(chapter: int):
+def get_manga(chapter: int, dropEveryOther: bool = False):
     response = requests.get(url.replace("?", str(chapter)))
     soup = BeautifulSoup(response.text, "html.parser")
     image_set = soup.find_all("img")
@@ -36,9 +36,11 @@ def get_manga(chapter: int):
         
         if image != "":
             page += 1
+            if dropEveryOther and page % 2 == 0:
+                continue
             downloadImage(image, page, chapter)
 
 # 30 - 115, 
-# get_manga(70)
-for i in range(75, 215):
-    get_manga(i)
+get_manga(30, True)
+# for i in range(121, 215):
+#     get_manga(i)
