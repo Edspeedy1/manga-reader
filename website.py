@@ -1,11 +1,10 @@
 import RangeHTTPServer
 import socketserver
 import os
-import time
 import threading
-import random
 import json
 import subprocess
+import yaml
 
 PORT = int(os.getenv('PORT', 8008))
 
@@ -37,8 +36,6 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
         super().do_GET()
     
     def do_POST(self):
-        content_length = int(self.headers['Content-Length'])
-        post_data = self.rfile.read(content_length)
         if self.path == '/get_pages':
             headers = self.headers
             manga = headers['manga']
@@ -46,11 +43,11 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
             pageCount = len(os.listdir("downloads/" + manga))
             self.send_json_response(200, pageCount)
 
-        if self.path == '/get_mangas':
+        elif self.path == '/get_mangas':
             print(os.listdir("downloads"))
             self.send_json_response(200, os.listdir("downloads"))
 
-        if self.path == '/get_panels':
+        elif self.path == '/get_panels':
             headers = self.headers
             manga = headers['manga']
             chapter = int(headers['chapter'])
@@ -59,6 +56,11 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
             panelList = ["downloads/" + manga + "/chapter-" + str(chapter) + "/" + i for i in panels]
             panelList.sort(key=lambda x: int(x.split("-")[-1].split(".")[0]))
             self.send_json_response(200, panelList)
+        
+        elif self.path == '/get_settings':
+            with open('settings.yml', 'r') as f:
+                settings = yaml.safe_load(f)
+            self.send_json_response(200, settings)
 
     def send_json_response(self, status_code, data):
         self.send_response(status_code)

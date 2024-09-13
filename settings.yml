@@ -1,0 +1,5 @@
+backgroundColor: 0c1016
+textColor: ffffff
+
+# the width of the manga panels (in % of screen width)
+imageWidth: 70
