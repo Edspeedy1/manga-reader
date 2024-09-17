@@ -1,4 +1,4 @@
-import RangeHTTPServer
+import http.server
 import socketserver
 import os
 import threading
@@ -13,7 +13,7 @@ print("starting server")
 class ThreadedHTTPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     pass
 
-class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
+class CustomRequestHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, request, client_address, server):
         super().__init__(request, client_address, server)
 

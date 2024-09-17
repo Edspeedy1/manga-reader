@@ -2,6 +2,9 @@
     --background-color: #0c1016;
     --text-color: white;
     --panel-width: 70vw;
+    --rotate: rotate(0deg);
+    --w: 100vw;
+    --h: 100vh;
 }
 
 body {
@@ -10,6 +13,10 @@ body {
     font-family: 'Courier New', Courier, monospace;
     font-size: 20px;
     overflow-x: hidden;
+
+    transform: var(--rotate);
+    width: var(--w);
+    height: var(--h);
 }
 
 #panels {

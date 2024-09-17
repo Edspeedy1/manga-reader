@@ -10,6 +10,11 @@ fetch("/get_settings", { method: "POST" }).then(response => response.json()).the
     document.documentElement.style.setProperty('--panel-width', data.panelWidth + "vw");
     document.documentElement.style.setProperty('--background-color', "#" + data.backgroundColor);
     document.documentElement.style.setProperty('--text-color', "#" + data.textColor);
+    if (data.rotate) {
+        document.documentElement.style.setProperty('--rotate', "rotate(90deg)");
+        document.documentElement.style.setProperty('--w', "100vh");
+        document.documentElement.style.setProperty('--h', "100vw");
+    }
 })
 
 if (manga == null) {

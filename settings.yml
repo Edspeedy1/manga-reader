@@ -3,3 +3,6 @@ textColor: ffffff
 
 # the width of the manga panels (in % of screen width)
 imageWidth: 70
+
+# rotate the webpage 90 degrees (default: false)
+rotate: true
